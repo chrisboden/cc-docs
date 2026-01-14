@@ -1,4 +1,4 @@
-# cc-docs
+# Claude Code Docs Skill
 
 A Claude Code skill that provides indexed documentation for debugging and reference.
 
