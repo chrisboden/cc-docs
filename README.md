@@ -1,4 +1,4 @@
-# Claude Code Docs Skill
+# Claude Code Know Thyself
 
 A Claude Code skill that provides indexed documentation for debugging and reference.
 
@@ -6,7 +6,7 @@ A Claude Code skill that provides indexed documentation for debugging and refere
 
 This is a [Claude Code skill](https://docs.anthropic.com/en/docs/claude-code/skills) - a directory of instruction files and resources that Claude can access to help with specific tasks.
 
-**cc-docs** mirrors the official Claude Code documentation from [code.claude.com/docs](https://code.claude.com/docs) for offline/fast access and provides a structured index for quick lookups.
+**cc-know-thyself** mirrors the official Claude Code documentation from [code.claude.com/docs](https://code.claude.com/docs) for offline/fast access and provides a structured index for quick lookups.
 
 ## Use Cases
 
@@ -23,7 +23,7 @@ Copy this directory into your project's `.claude/skills/` folder:
 your-project/
 └── .claude/
     └── skills/
-        └── cc-docs/
+        └── cc-know-thyself/
             ├── SKILL.md
             ├── scripts/
             │   └── fetch.py
@@ -36,7 +36,7 @@ your-project/
 Or clone directly:
 
 ```bash
-git clone https://github.com/chrisboden/cc-docs.git .claude/skills/cc-docs
+git clone https://github.com/chrisboden/cc-know-thyself.git .claude/skills/cc-know-thyself
 ```
 
 ## Updating Documentation
@@ -57,7 +57,7 @@ python3 scripts/fetch.py --update-skill
 ## Structure
 
 ```
-cc-docs/
+cc-know-thyself/
 ├── README.md           # This file
 ├── SKILL.md            # Skill manifest and index (read by Claude)
 ├── scripts/

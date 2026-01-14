@@ -1,5 +1,5 @@
 ---
-name: cc-docs
+name: cc-know-thyself
 description: Provides an indexed manifest of Claude Code CLI documentation for fast lookup and task guidance.
 ---
 
