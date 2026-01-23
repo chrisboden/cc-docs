@@ -2,15 +2,11 @@
 
 > Learn about integrating Claude Code into your development workflow with GitLab CI/CD
 
-<Info>
-  Claude Code for GitLab CI/CD is currently in beta. Features and functionality may evolve as we refine the experience.
+> **Info:** Claude Code for GitLab CI/CD is currently in beta. Features and functionality may evolve as we refine the experience.
 
   This integration is maintained by GitLab. For support, see the following [GitLab issue](https://gitlab.com/gitlab-org/gitlab/-/issues/573776).
-</Info>
 
-<Note>
-  This integration is built on top of the [Claude Code CLI and SDK](https://docs.claude.com/en/docs/agent-sdk), enabling programmatic use of Claude in your CI/CD jobs and custom automation workflows.
-</Note>
+> **Note:** This integration is built on top of the [Claude Code CLI and SDK](https://docs.claude.com/en/docs/agent-sdk), enabling programmatic use of Claude in your CI/CD jobs and custom automation workflows.
 
 ## Why use Claude Code with GitLab?
 
@@ -87,15 +83,13 @@ claude:
       claude
       -p "${AI_FLOW_INPUT:-'Review this MR and implement the requested changes'}"
       --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
+      --allowedTools "Bash Read Edit Write mcp__gitlab"
       --debug
 ```
 
 After adding the job and your `ANTHROPIC_API_KEY` variable, test by running the job manually from **CI/CD** → **Pipelines**, or trigger it from an MR to let Claude propose updates in a branch and open an MR if needed.
 
-<Note>
-  To run on AWS Bedrock or Google Vertex AI instead of the Claude API, see the [Using with AWS Bedrock & Google Vertex AI](#using-with-aws-bedrock--google-vertex-ai) section below for authentication and environment setup.
-</Note>
+> **Note:** To run on AWS Bedrock or Google Vertex AI instead of the Claude API, see the [Using with AWS Bedrock & Google Vertex AI](#using-with-aws-bedrock--google-vertex-ai) section below for authentication and environment setup.
 
 ### Manual setup (recommended for production)
 
@@ -262,7 +256,7 @@ claude:
       claude
       -p "${AI_FLOW_INPUT:-'Summarize recent changes and suggest improvements'}"
       --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
+      --allowedTools "Bash Read Edit Write mcp__gitlab"
       --debug
   # Claude Code will use ANTHROPIC_API_KEY from CI/CD variables
 ```
@@ -308,15 +302,13 @@ claude-bedrock:
       claude
       -p "${AI_FLOW_INPUT:-'Implement the requested changes and open an MR'}"
       --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
+      --allowedTools "Bash Read Edit Write mcp__gitlab"
       --debug
   variables:
     AWS_REGION: "us-west-2"
 ```
 
-<Note>
-  Model IDs for Bedrock include region-specific prefixes and version suffixes (for example, `us.anthropic.claude-sonnet-4-5-20250929-v1:0`). Pass the desired model via your job configuration or prompt if your workflow supports it.
-</Note>
+> **Note:** Model IDs for Bedrock include region-specific prefixes and version suffixes (for example, `us.anthropic.claude-sonnet-4-5-20250929-v1:0`). Pass the desired model via your job configuration or prompt if your workflow supports it.
 
 ### Google Vertex AI job example (Workload Identity Federation)
 
@@ -361,15 +353,13 @@ claude-vertex:
       claude
       -p "${AI_FLOW_INPUT:-'Review and update code as requested'}"
       --permission-mode acceptEdits
-      --allowedTools "Bash(*) Read(*) Edit(*) Write(*) mcp__gitlab"
+      --allowedTools "Bash Read Edit Write mcp__gitlab"
       --debug
   variables:
     CLOUD_ML_REGION: "us-east5"
 ```
 
-<Note>
-  With Workload Identity Federation, you do not need to store service account keys. Use repository-specific trust conditions and least-privilege service accounts.
-</Note>
+> **Note:** With Workload Identity Federation, you do not need to store service account keys. Use repository-specific trust conditions and least-privilege service accounts.
 
 ## Best practices
 
@@ -450,9 +440,7 @@ Claude Code supports these commonly used inputs:
 * `ANTHROPIC_API_KEY`: Required for the Claude API (not used for Bedrock/Vertex)
 * Provider-specific environment: `AWS_REGION`, project/region vars for Vertex
 
-<Note>
-  Exact flags and parameters may vary by version of `@anthropic-ai/claude-code`. Run `claude --help` in your job to see supported options.
-</Note>
+> **Note:** Exact flags and parameters may vary by version of `@anthropic-ai/claude-code`. Run `claude --help` in your job to see supported options.
 
 ### Customizing Claude's behavior
 

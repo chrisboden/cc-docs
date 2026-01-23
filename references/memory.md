@@ -10,7 +10,7 @@ Claude Code offers four memory locations in a hierarchical structure, each servi
 
 | Memory Type                | Location                                                                                                                                                        | Purpose                                             | Use Case Examples                                                    | Shared With                     |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------- | -------------------------------------------------------------------- | ------------------------------- |
-| **Enterprise policy**      | • macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`<br />• Linux: `/etc/claude-code/CLAUDE.md`<br />• Windows: `C:\Program Files\ClaudeCode\CLAUDE.md` | Organization-wide instructions managed by IT/DevOps | Company coding standards, security policies, compliance requirements | All users in organization       |
+| **Managed policy**         | • macOS: `/Library/Application Support/ClaudeCode/CLAUDE.md`<br />• Linux: `/etc/claude-code/CLAUDE.md`<br />• Windows: `C:\Program Files\ClaudeCode\CLAUDE.md` | Organization-wide instructions managed by IT/DevOps | Company coding standards, security policies, compliance requirements | All users in organization       |
 | **Project memory**         | `./CLAUDE.md` or `./.claude/CLAUDE.md`                                                                                                                          | Team-shared instructions for the project            | Project architecture, coding standards, common workflows             | Team members via source control |
 | **Project rules**          | `./.claude/rules/*.md`                                                                                                                                          | Modular, topic-specific project instructions        | Language-specific guidelines, testing conventions, API standards     | Team members via source control |
 | **User memory**            | `~/.claude/CLAUDE.md`                                                                                                                                           | Personal preferences for all projects               | Code styling preferences, personal tooling shortcuts                 | Just you (all projects)         |
@@ -18,9 +18,7 @@ Claude Code offers four memory locations in a hierarchical structure, each servi
 
 All memory files are automatically loaded into Claude Code's context when launched. Files higher in the hierarchy take precedence and are loaded first, providing a foundation that more specific memories build upon.
 
-<Note>
-  CLAUDE.local.md files are automatically added to .gitignore, making them ideal for private project-specific preferences that shouldn't be checked into version control.
-</Note>
+> **Note:** CLAUDE.local.md files are automatically added to .gitignore, making them ideal for private project-specific preferences that shouldn't be checked into version control.
 
 ## CLAUDE.md imports
 
@@ -56,7 +54,7 @@ Claude will also discover CLAUDE.md nested in subtrees under your current workin
 
 ## Directly edit memories with `/memory`
 
-Use the `/memory` slash command during a session to open any memory file in your system editor for more extensive additions or organization.
+Use the `/memory` command during a session to open any memory file in your system editor for more extensive additions or organization.
 
 ## Set up project memory
 
@@ -68,14 +66,12 @@ Bootstrap a CLAUDE.md for your codebase with the following command:
 > /init
 ```
 
-<Tip>
-  Tips:
+> **Tip:** Tips:
 
   * Include frequently used commands (build, test, lint) to avoid repeated searches
   * Document code style preferences and naming conventions
   * Add important architectural patterns specific to your project
   * CLAUDE.md memories can be used for both instructions shared with your team and for your individual preferences.
-</Tip>
 
 ## Modular rules with `.claude/rules/`
 
@@ -195,14 +191,12 @@ You can create personal rules that apply to all your projects in `~/.claude/rule
 
 User-level rules are loaded before project rules, giving project rules higher priority.
 
-<Tip>
-  Best practices for `.claude/rules/`:
+> **Tip:** Best practices for `.claude/rules/`:
 
   * **Keep rules focused**: Each file should cover one topic (e.g., `testing.md`, `api-design.md`)
   * **Use descriptive filenames**: The filename should indicate what the rules cover
   * **Use conditional rules sparingly**: Only add `paths` frontmatter when rules truly apply to specific file types
   * **Organize with subdirectories**: Group related rules (e.g., `frontend/`, `backend/`)
-</Tip>
 
 ## Organization-level memory management
 

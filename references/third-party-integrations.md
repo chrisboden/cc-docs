@@ -212,9 +212,7 @@ The following examples show the environment variables to set in your shell or sh
   </Tab>
 </Tabs>
 
-<Tip>
-  Use `/status` in Claude Code to verify your proxy and gateway configuration is applied correctly.
-</Tip>
+> **Tip:** Use `/status` in Claude Code to verify your proxy and gateway configuration is applied correctly.
 
 ## Best practices for organizations
 

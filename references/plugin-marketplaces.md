@@ -19,21 +19,26 @@ Once your marketplace is live, you can update it by pushing changes to your repo
 
 ## Walkthrough: create a local marketplace
 
-This example creates a marketplace with one plugin: a `/review` command for code reviews. You'll create the directory structure, add a slash command, create the plugin manifest and marketplace catalog, then install and test it.
+This example creates a marketplace with one plugin: a `/review` skill for code reviews. You'll create the directory structure, add a skill, create the plugin manifest and marketplace catalog, then install and test it.
 
 <Steps>
   <Step title="Create the directory structure">
     ```bash  theme={null}
     mkdir -p my-marketplace/.claude-plugin
     mkdir -p my-marketplace/plugins/review-plugin/.claude-plugin
-    mkdir -p my-marketplace/plugins/review-plugin/commands
+    mkdir -p my-marketplace/plugins/review-plugin/skills/review
     ```
   </Step>
 
-  <Step title="Create the plugin command">
-    Create a Markdown file that defines what the `/review` command does.
+  <Step title="Create the skill">
+    Create a `SKILL.md` file that defines what the `/review` skill does.
 
-    ```markdown my-marketplace/plugins/review-plugin/commands/review.md theme={null}
+    ```markdown my-marketplace/plugins/review-plugin/skills/review/SKILL.md theme={null}
+    ---
+    description: Review code for bugs, security, and performance
+    disable-model-invocation: true
+    ---
+
     Review the code I've selected or the recent changes for:
     - Potential bugs or edge cases
     - Security concerns
@@ -50,7 +55,7 @@ This example creates a marketplace with one plugin: a `/review` command for code
     ```json my-marketplace/plugins/review-plugin/.claude-plugin/plugin.json theme={null}
     {
       "name": "review-plugin",
-      "description": "Adds a /review command for quick code reviews",
+      "description": "Adds a /review skill for quick code reviews",
       "version": "1.0.0"
     }
     ```
@@ -69,7 +74,7 @@ This example creates a marketplace with one plugin: a `/review` command for code
         {
           "name": "review-plugin",
           "source": "./plugins/review-plugin",
-          "description": "Adds a /review command for quick code reviews"
+          "description": "Adds a /review skill for quick code reviews"
         }
       ]
     }
@@ -96,11 +101,9 @@ This example creates a marketplace with one plugin: a `/review` command for code
 
 To learn more about what plugins can do, including hooks, agents, MCP servers, and LSP servers, see [Plugins](/en/plugins).
 
-<Note>
-  **How plugins are installed**: When users install a plugin, Claude Code copies the plugin directory to a cache location. This means plugins can't reference files outside their directory using paths like `../shared-utils`, because those files won't be copied.
+> **Note:** **How plugins are installed**: When users install a plugin, Claude Code copies the plugin directory to a cache location. This means plugins can't reference files outside their directory using paths like `../shared-utils`, because those files won't be copied.
 
   If you need to share files across plugins, use symlinks (which are followed during copying) or restructure your marketplace so the shared directory is inside the plugin source path. See [Plugin caching and file resolution](/en/plugins-reference#plugin-caching-and-file-resolution) for details.
-</Note>
 
 ## Create the marketplace file
 
@@ -147,9 +150,7 @@ Each plugin entry needs at minimum a `name` and `source` (where to fetch it from
 | `owner`   | object | Marketplace maintainer information ([see fields below](#owner-fields))                                                                                                 |                |
 | `plugins` | array  | List of available plugins                                                                                                                                              | See below      |
 
-<Note>
-  **Reserved names**: The following marketplace names are reserved for official Anthropic use and cannot be used by third-party marketplaces: `claude-code-marketplace`, `claude-code-plugins`, `claude-plugins-official`, `anthropic-marketplace`, `anthropic-plugins`, `agent-skills`, `life-sciences`. Names that impersonate official marketplaces (like `official-claude-plugins` or `anthropic-tools-v2`) are also blocked.
-</Note>
+> **Note:** **Reserved names**: The following marketplace names are reserved for official Anthropic use and cannot be used by third-party marketplaces: `claude-code-marketplace`, `claude-code-plugins`, `claude-plugins-official`, `anthropic-marketplace`, `anthropic-plugins`, `agent-skills`, `life-sciences`. Names that impersonate official marketplaces (like `official-claude-plugins` or `anthropic-tools-v2`) are also blocked.
 
 ### Owner fields
 
@@ -217,9 +218,7 @@ For plugins in the same repository:
 }
 ```
 
-<Note>
-  Relative paths only work when users add your marketplace via Git (GitHub, GitLab, or git URL). If users add your marketplace via a direct URL to the `marketplace.json` file, relative paths will not resolve correctly. For URL-based distribution, use GitHub, npm, or git URL sources instead. See [Troubleshooting](#plugins-with-relative-paths-fail-in-url-based-marketplaces) for details.
-</Note>
+> **Note:** Relative paths only work when users add your marketplace via Git (GitHub, GitLab, or git URL). If users add your marketplace via a direct URL to the `marketplace.json` file, relative paths will not resolve correctly. For URL-based distribution, use GitHub, npm, or git URL sources instead. See [Troubleshooting](#plugins-with-relative-paths-fail-in-url-based-marketplaces) for details.
 
 ### GitHub repositories
 
@@ -233,6 +232,26 @@ For plugins in the same repository:
 }
 ```
 
+You can pin to a specific branch, tag, or commit:
+
+```json  theme={null}
+{
+  "name": "github-plugin",
+  "source": {
+    "source": "github",
+    "repo": "owner/plugin-repo",
+    "ref": "v2.0.0",
+    "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+  }
+}
+```
+
+| Field  | Type   | Description                                                           |
+| :----- | :----- | :-------------------------------------------------------------------- |
+| `repo` | string | Required. GitHub repository in `owner/repo` format                    |
+| `ref`  | string | Optional. Git branch or tag (defaults to repository default branch)   |
+| `sha`  | string | Optional. Full 40-character git commit SHA to pin to an exact version |
+
 ### Git repositories
 
 ```json  theme={null}
@@ -244,6 +263,26 @@ For plugins in the same repository:
   }
 }
 ```
+
+You can pin to a specific branch, tag, or commit:
+
+```json  theme={null}
+{
+  "name": "git-plugin",
+  "source": {
+    "source": "url",
+    "url": "https://gitlab.com/team/plugin.git",
+    "ref": "main",
+    "sha": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0"
+  }
+}
+```
+
+| Field | Type   | Description                                                           |
+| :---- | :----- | :-------------------------------------------------------------------- |
+| `url` | string | Required. Full git repository URL (must end with `.git`)              |
+| `ref` | string | Optional. Git branch or tag (defaults to repository default branch)   |
+| `sha` | string | Optional. Full 40-character git commit SHA to pin to an exact version |
 
 ### Advanced plugin entries
 
@@ -340,9 +379,7 @@ export GITHUB_TOKEN=ghp_xxxxxxxxxxxxxxxxxxxx
 
 Authentication tokens are only used when a repository requires authentication. Public repositories work without any tokens configured, even if tokens are present in your environment.
 
-<Note>
-  For CI/CD environments, configure the token as a secret environment variable. GitHub Actions automatically provides `GITHUB_TOKEN` for repositories in the same organization.
-</Note>
+> **Note:** For CI/CD environments, configure the token as a secret environment variable. GitHub Actions automatically provides `GITHUB_TOKEN` for repositories in the same organization.
 
 ### Test locally before distribution
 
@@ -438,7 +475,7 @@ The allowlist uses exact matching. For a marketplace to be allowed, all specifie
 * For GitHub sources: `repo` is required, and `ref` or `path` must also match if specified in the allowlist
 * For URL sources: the full URL must match exactly
 
-Because `strictKnownMarketplaces` is set in [managed settings](/en/settings#settings-file-locations), individual users and project configurations cannot override these restrictions.
+Because `strictKnownMarketplaces` is set in [managed settings](/en/settings#settings-files), individual users and project configurations cannot override these restrictions.
 
 For complete configuration details including all supported source types and comparison with `extraKnownMarketplaces`, see the [strictKnownMarketplaces reference](/en/settings#strictknownmarketplaces).
 

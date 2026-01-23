@@ -125,9 +125,7 @@ Claude Code uses these default models for Bedrock:
 | Primary model    | `global.anthropic.claude-sonnet-4-5-20250929-v1:0` |
 | Small/fast model | `us.anthropic.claude-haiku-4-5-20251001-v1:0`      |
 
-<Note>
-  For Bedrock users, Claude Code won't automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (for example, `us.anthropic.claude-haiku-4-5-20251001-v1:0`).
-</Note>
+> **Note:** For Bedrock users, Claude Code won't automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (for example, `us.anthropic.claude-haiku-4-5-20251001-v1:0`).
 
 To customize models, use one of these methods:
 
@@ -143,7 +141,7 @@ export ANTHROPIC_MODEL='arn:aws:bedrock:us-east-2:your-account-id:application-in
 export DISABLE_PROMPT_CACHING=1
 ```
 
-<Note>[Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching) may not be available in all regions.</Note>
+> **Note:** [Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching) may not be available in all regions.
 
 ### 5. Output token configuration
 
@@ -205,9 +203,21 @@ For more restrictive permissions, you can limit the Resource to specific inferen
 
 For details, see [Bedrock IAM documentation](https://docs.aws.amazon.com/bedrock/latest/userguide/security-iam.html).
 
-<Note>
-  We recommend creating a dedicated AWS account for Claude Code to simplify cost tracking and access control.
-</Note>
+> **Note:** We recommend creating a dedicated AWS account for Claude Code to simplify cost tracking and access control.
+
+## AWS Guardrails
+
+[Amazon Bedrock Guardrails](https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html) let you implement content filtering for Claude Code. Create a Guardrail in the [Amazon Bedrock console](https://console.aws.amazon.com/bedrock/), publish a version, then add the Guardrail headers to your [settings file](/en/settings). Enable Cross-Region inference on your Guardrail if you're using cross-region inference profiles.
+
+Example configuration:
+
+```json  theme={null}
+{
+  "env": {
+    "ANTHROPIC_CUSTOM_HEADERS": "X-Amzn-Bedrock-GuardrailIdentifier: your-guardrail-id\nX-Amzn-Bedrock-GuardrailVersion: 1"
+  }
+}
+```
 
 ## Troubleshooting
 

@@ -2,7 +2,7 @@
 
 > Find and install plugins from marketplaces to extend Claude Code with new commands, agents, and capabilities.
 
-Plugins extend Claude Code with custom commands, agents, hooks, and MCP servers. Plugin marketplaces are catalogs that help you discover and install these extensions without building them yourself.
+Plugins extend Claude Code with skills, agents, hooks, and MCP servers. Plugin marketplaces are catalogs that help you discover and install these extensions without building them yourself.
 
 Looking to create and distribute your own marketplace? See [Create and distribute a plugin marketplace](/en/plugin-marketplaces).
 
@@ -32,9 +32,7 @@ To install a plugin from the official marketplace:
 /plugin install plugin-name@claude-plugins-official
 ```
 
-<Note>
-  The official marketplace is maintained by Anthropic. To distribute your own plugins, [create your own marketplace](/en/plugin-marketplaces) and share it with users.
-</Note>
+> **Note:** The official marketplace is maintained by Anthropic. To distribute your own plugins, [create your own marketplace](/en/plugin-marketplaces) and share it with users.
 
 The official marketplace includes several categories of plugins:
 
@@ -59,9 +57,7 @@ These plugins require the language server binary to be installed on your system.
 
 You can also [create your own LSP plugin](/en/plugins-reference#lsp-servers) for other languages.
 
-<Note>
-  If you see `Executable not found in $PATH` in the `/plugin` Errors tab after installing a plugin, install the required binary from the table above.
-</Note>
+> **Note:** If you see `Executable not found in $PATH` in the `/plugin` Errors tab after installing a plugin, install the required binary from the table above.
 
 ### External integrations
 
@@ -155,9 +151,7 @@ The rest of this guide covers all the ways you can add marketplaces, install plu
 
 Use the `/plugin marketplace add` command to add marketplaces from different sources.
 
-<Tip>
-  **Shortcuts**: You can use `/plugin market` instead of `/plugin marketplace`, and `rm` instead of `remove`.
-</Tip>
+> **Tip:** **Shortcuts**: You can use `/plugin market` instead of `/plugin marketplace`, and `rm` instead of `remove`.
 
 * **GitHub repositories**: `owner/repo` format (for example, `anthropics/claude-code`)
 * **Git URLs**: any git repository URL (GitLab, Bitbucket, self-hosted)
@@ -218,9 +212,7 @@ Add a remote `marketplace.json` file via URL:
 /plugin marketplace add https://example.com/marketplace.json
 ```
 
-<Note>
-  URL-based marketplaces have some limitations compared to Git-based marketplaces. If you encounter "path not found" errors when installing plugins, see [Troubleshooting](/en/plugin-marketplaces#plugins-with-relative-paths-fail-in-url-based-marketplaces).
-</Note>
+> **Note:** URL-based marketplaces have some limitations compared to Git-based marketplaces. If you encounter "path not found" errors when installing plugins, see [Troubleshooting](/en/plugin-marketplaces#plugins-with-relative-paths-fail-in-url-based-marketplaces).
 
 ## Install plugins
 
@@ -240,13 +232,11 @@ You may also see plugins with **managed** scope—these are installed by adminis
 
 Run `/plugin` and go to the **Installed** tab to see your plugins grouped by scope.
 
-<Warning>
-  Make sure you trust a plugin before installing it. Anthropic does not control what MCP servers, files, or other software are included in plugins and cannot verify that they work as intended. Check each plugin's homepage for more information.
-</Warning>
+> **Warning:** Make sure you trust a plugin before installing it. Anthropic does not control what MCP servers, files, or other software are included in plugins and cannot verify that they work as intended. Check each plugin's homepage for more information.
 
 ## Manage installed plugins
 
-Run `/plugin` and go to the **Installed** tab to view, enable, disable, or uninstall your plugins.
+Run `/plugin` and go to the **Installed** tab to view, enable, disable, or uninstall your plugins. Type to filter the list by plugin name or description.
 
 You can also manage plugins with direct commands.
 
@@ -310,9 +300,7 @@ Remove a marketplace:
 /plugin marketplace remove marketplace-name
 ```
 
-<Warning>
-  Removing a marketplace will uninstall any plugins you installed from it.
-</Warning>
+> **Warning:** Removing a marketplace will uninstall any plugins you installed from it.
 
 ### Configure auto-updates
 
@@ -362,13 +350,13 @@ If you see "unknown command" or the `/plugin` command doesn't appear:
 * **Marketplace not loading**: Verify the URL is accessible and that `.claude-plugin/marketplace.json` exists at the path
 * **Plugin installation failures**: Check that plugin source URLs are accessible and repositories are public (or you have access)
 * **Files not found after installation**: Plugins are copied to a cache, so paths referencing files outside the plugin directory won't work
-* **Plugin Skills not appearing**: Clear the cache with `rm -rf ~/.claude/plugins/cache`, restart Claude Code, and reinstall the plugin. See [Plugin Skills not appearing](/en/skills#plugin-skills-not-appearing-after-installation) for details.
+* **Plugin skills not appearing**: Clear the cache with `rm -rf ~/.claude/plugins/cache`, restart Claude Code, and reinstall the plugin.
 
 For detailed troubleshooting with solutions, see [Troubleshooting](/en/plugin-marketplaces#troubleshooting) in the marketplace guide. For debugging tools, see [Debugging and development tools](/en/plugins-reference#debugging-and-development-tools).
 
 ## Next steps
 
-* **Build your own plugins**: See [Plugins](/en/plugins) to create custom commands, agents, and hooks
+* **Build your own plugins**: See [Plugins](/en/plugins) to create skills, agents, and hooks
 * **Create a marketplace**: See [Create a plugin marketplace](/en/plugin-marketplaces) to distribute plugins to your team or community
 * **Technical reference**: See [Plugins reference](/en/plugins-reference) for complete specifications
 

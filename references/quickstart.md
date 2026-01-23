@@ -35,18 +35,24 @@ To install Claude Code, use one of the following methods:
     ```batch  theme={null}
     curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
     ```
+
+    > **Info:** Native installations automatically update in the background to keep you on the latest version.
   </Tab>
 
   <Tab title="Homebrew">
     ```sh  theme={null}
     brew install --cask claude-code
     ```
+
+    > **Info:** Homebrew installations do not auto-update. Run `brew upgrade claude-code` periodically to get the latest features and security fixes.
   </Tab>
 
   <Tab title="WinGet">
     ```powershell  theme={null}
     winget install Anthropic.ClaudeCode
     ```
+
+    > **Info:** WinGet installations do not auto-update. Run `winget upgrade Anthropic.ClaudeCode` periodically to get the latest features and security fixes.
   </Tab>
 </Tabs>
 
@@ -71,13 +77,9 @@ You can log in using any of these account types:
 
 Once logged in, your credentials are stored and you won't need to log in again.
 
-<Note>
-  When you first authenticate Claude Code with your Claude Console account, a workspace called "Claude Code" is automatically created for you. This workspace provides centralized cost tracking and management for all Claude Code usage in your organization.
-</Note>
+> **Note:** When you first authenticate Claude Code with your Claude Console account, a workspace called "Claude Code" is automatically created for you. This workspace provides centralized cost tracking and management for all Claude Code usage in your organization.
 
-<Note>
-  You can have both account types under the same email address. If you need to log in again or switch accounts, use the `/login` command within Claude Code.
-</Note>
+> **Note:** You can have both account types under the same email address. If you need to log in again or switch accounts, use the `/login` command within Claude Code.
 
 ## Step 3: Start your first session
 
@@ -90,9 +92,7 @@ claude
 
 You'll see the Claude Code welcome screen with your session information, recent conversations, and latest updates. Type `/help` for available commands or `/resume` to continue a previous conversation.
 
-<Tip>
-  After logging in (Step 2), your credentials are stored on your system. Learn more in [Credential Management](/en/iam#credential-management).
-</Tip>
+> **Tip:** After logging in (Step 2), your credentials are stored on your system. Learn more in [Credential Management](/en/iam#credential-management).
 
 ## Step 4: Ask your first question
 
@@ -123,16 +123,14 @@ You can also ask Claude about its own capabilities:
 ```
 
 ```
-> how do I use slash commands in Claude Code?
+> how do I create custom skills in Claude Code?
 ```
 
 ```
 > can Claude Code work with Docker?
 ```
 
-<Note>
-  Claude Code reads your files as needed - you don't have to manually add context. Claude also has access to its own documentation and can answer questions about its features and capabilities.
-</Note>
+> **Note:** Claude Code reads your files as needed - you don't have to manually add context. Claude also has access to its own documentation and can answer questions about its features and capabilities.
 
 ## Step 5: Make your first code change
 
@@ -149,9 +147,7 @@ Claude Code will:
 3. Ask for your approval
 4. Make the edit
 
-<Note>
-  Claude Code always asks for permission before modifying files. You can approve individual changes or enable "Accept all" mode for a session.
-</Note>
+> **Note:** Claude Code always asks for permission before modifying files. You can approve individual changes or enable "Accept all" mode for a session.
 
 ## Step 6: Use Git with Claude Code
 
@@ -230,9 +226,7 @@ There are a number of ways to work with Claude:
 > review my changes and suggest improvements
 ```
 
-<Tip>
-  **Remember**: Claude Code is your AI pair programmer. Talk to it like you would a helpful colleague - describe what you want to achieve, and it will help you get there.
-</Tip>
+> **Tip:** **Remember**: Claude Code is your AI pair programmer. Talk to it like you would a helpful colleague - describe what you want to achieve, and it will help you get there.
 
 ## Essential commands
 
@@ -255,14 +249,15 @@ See the [CLI reference](/en/cli-reference) for a complete list of commands.
 ## Pro tips for beginners
 
 <AccordionGroup>
-  <Accordion title="Be specific with your requests">
-    Instead of: "fix the bug"
+  **Be specific with your requests**
+
+Instead of: "fix the bug"
 
     Try: "fix the login bug where users see a blank screen after entering wrong credentials"
-  </Accordion>
 
-  <Accordion title="Use step-by-step instructions">
-    Break complex tasks into steps:
+  **Use step-by-step instructions**
+
+Break complex tasks into steps:
 
     ```
     > 1. create a new database table for user profiles
@@ -275,10 +270,10 @@ See the [CLI reference](/en/cli-reference) for a complete list of commands.
     ```
     > 3. build a webpage that allows users to see and edit their information
     ```
-  </Accordion>
 
-  <Accordion title="Let Claude explore first">
-    Before making changes, let Claude understand your code:
+  **Let Claude explore first**
+
+Before making changes, let Claude understand your code:
 
     ```
     > analyze the database schema
@@ -287,14 +282,13 @@ See the [CLI reference](/en/cli-reference) for a complete list of commands.
     ```
     > build a dashboard showing products that are most frequently returned by our UK customers
     ```
-  </Accordion>
 
-  <Accordion title="Save time with shortcuts">
-    * Press `?` to see all available keyboard shortcuts
+  **Save time with shortcuts**
+
+* Press `?` to see all available keyboard shortcuts
     * Use Tab for command completion
     * Press ↑ for command history
-    * Type `/` to see all slash commands
-  </Accordion>
+    * Type `/` to see all commands and skills
 </AccordionGroup>
 
 ## What's next?

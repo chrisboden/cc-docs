@@ -2,25 +2,41 @@
 
 > Complete technical reference for Claude Code plugin system, including schemas, CLI commands, and component specifications.
 
-<Tip>
-  Looking to install plugins? See [Discover and install plugins](/en/discover-plugins). For creating plugins, see [Plugins](/en/plugins). For distributing plugins, see [Plugin marketplaces](/en/plugin-marketplaces).
-</Tip>
+> **Tip:** Looking to install plugins? See [Discover and install plugins](/en/discover-plugins). For creating plugins, see [Plugins](/en/plugins). For distributing plugins, see [Plugin marketplaces](/en/plugin-marketplaces).
 
 This reference provides complete technical specifications for the Claude Code plugin system, including component schemas, CLI commands, and development tools.
 
 ## Plugin components reference
 
-This section documents the five types of components that plugins can provide.
+This section documents the types of components that plugins can provide.
 
-### Commands
+### Skills
 
-Plugins add custom slash commands that integrate seamlessly with Claude Code's command system.
+Plugins add skills to Claude Code, creating `/name` shortcuts that you or Claude can invoke.
 
-**Location**: `commands/` directory in plugin root
+**Location**: `skills/` or `commands/` directory in plugin root
 
-**File format**: Markdown files with frontmatter
+**File format**: Skills are directories with `SKILL.md`; commands are simple markdown files
 
-For complete details on plugin command structure, invocation patterns, and features, see [Plugin commands](/en/slash-commands#plugin-commands).
+**Skill structure**:
+
+```
+skills/
+├── pdf-processor/
+│   ├── SKILL.md
+│   ├── reference.md (optional)
+│   └── scripts/ (optional)
+└── code-reviewer/
+    └── SKILL.md
+```
+
+**Integration behavior**:
+
+* Skills and commands are automatically discovered when the plugin is installed
+* Claude can invoke them automatically based on task context
+* Skills can include supporting files alongside SKILL.md
+
+For complete details, see [Skills](/en/skills).
 
 ### Agents
 
@@ -57,37 +73,6 @@ Provide examples of when this agent should be used and what kinds of problems it
 * Claude can invoke agents automatically based on task context
 * Agents can be invoked manually by users
 * Plugin agents work alongside built-in Claude agents
-
-### Skills
-
-Plugins can provide Agent Skills that extend Claude's capabilities. Skills are model-invoked—Claude autonomously decides when to use them based on the task context.
-
-**Location**: `skills/` directory in plugin root
-
-**File format**: Directories containing `SKILL.md` files with frontmatter
-
-**Skill structure**:
-
-```
-skills/
-├── pdf-processor/
-│   ├── SKILL.md
-│   ├── reference.md (optional)
-│   └── scripts/ (optional)
-└── code-reviewer/
-    └── SKILL.md
-```
-
-**Integration behavior**:
-
-* Plugin Skills are automatically discovered when the plugin is installed
-* Claude autonomously invokes Skills based on matching task context
-* Skills can include supporting files alongside SKILL.md
-
-For SKILL.md format and complete Skill authoring guidance, see:
-
-* [Use Skills in Claude Code](/en/skills)
-* [Agent Skills overview](https://docs.claude.com/en/docs/agents-and-tools/agent-skills/overview#skill-structure)
 
 ### Hooks
 
@@ -128,6 +113,7 @@ Plugins can provide event handlers that respond to Claude Code events automatica
 * `Stop`: When Claude attempts to stop
 * `SubagentStart`: When a subagent is started
 * `SubagentStop`: When a subagent attempts to stop
+* `Setup`: When `--init`, `--init-only`, or `--maintenance` flags are used
 * `SessionStart`: At the beginning of sessions
 * `SessionEnd`: At the end of sessions
 * `PreCompact`: Before conversation history is compacted
@@ -176,9 +162,7 @@ Plugins can bundle Model Context Protocol (MCP) servers to connect Claude Code w
 
 ### LSP servers
 
-<Tip>
-  Looking to use LSP plugins? Install them from the official marketplace—search for "lsp" in the `/plugin` Discover tab. This section documents how to create LSP plugins for languages not covered by the official marketplace.
-</Tip>
+> **Tip:** Looking to use LSP plugins? Install them from the official marketplace—search for "lsp" in the `/plugin` Discover tab. This section documents how to create LSP plugins for languages not covered by the official marketplace.
 
 Plugins can provide [Language Server Protocol](https://microsoft.github.io/language-server-protocol/) (LSP) servers to give Claude real-time code intelligence while working on your codebase.
 
@@ -245,9 +229,7 @@ LSP integration provides:
 | `restartOnCrash`        | Whether to automatically restart the server if it crashes |
 | `maxRestarts`           | Maximum number of restart attempts before giving up       |
 
-<Warning>
-  **You must install the language server binary separately.** LSP plugins configure how Claude Code connects to a language server, but they don't include the server itself. If you see `Executable not found in $PATH` in the `/plugin` Errors tab, install the required binary for your language.
-</Warning>
+> **Warning:** **You must install the language server binary separately.** LSP plugins configure how Claude Code connects to a language server, but they don't include the server itself. If you see `Executable not found in $PATH` in the `/plugin` Errors tab, install the required binary for your language.
 
 **Available LSP plugins:**
 
@@ -430,9 +412,7 @@ Set the plugin path to a parent directory that contains all required files, then
 
 This approach copies the entire marketplace root, giving your plugin access to sibling directories.
 
-<Note>
-  Symlinks that point to locations outside the plugin's logical root are followed during copying. This provides flexibility while maintaining the security benefits of the caching system.
-</Note>
+> **Note:** Symlinks that point to locations outside the plugin's logical root are followed during copying. This provides flexibility while maintaining the security benefits of the caching system.
 
 ***
 
@@ -472,21 +452,19 @@ enterprise-plugin/
 └── CHANGELOG.md             # Version history
 ```
 
-<Warning>
-  The `.claude-plugin/` directory contains the `plugin.json` file. All other directories (commands/, agents/, skills/, hooks/) must be at the plugin root, not inside `.claude-plugin/`.
-</Warning>
+> **Warning:** The `.claude-plugin/` directory contains the `plugin.json` file. All other directories (commands/, agents/, skills/, hooks/) must be at the plugin root, not inside `.claude-plugin/`.
 
 ### File locations reference
 
-| Component       | Default Location             | Purpose                          |
-| :-------------- | :--------------------------- | :------------------------------- |
-| **Manifest**    | `.claude-plugin/plugin.json` | Required metadata file           |
-| **Commands**    | `commands/`                  | Slash command Markdown files     |
-| **Agents**      | `agents/`                    | Subagent Markdown files          |
-| **Skills**      | `skills/`                    | Agent Skills with SKILL.md files |
-| **Hooks**       | `hooks/hooks.json`           | Hook configuration               |
-| **MCP servers** | `.mcp.json`                  | MCP server definitions           |
-| **LSP servers** | `.lsp.json`                  | Language server configurations   |
+| Component       | Default Location             | Purpose                                                     |
+| :-------------- | :--------------------------- | :---------------------------------------------------------- |
+| **Manifest**    | `.claude-plugin/plugin.json` | Required metadata file                                      |
+| **Commands**    | `commands/`                  | Skill Markdown files (legacy; use `skills/` for new skills) |
+| **Agents**      | `agents/`                    | Subagent Markdown files                                     |
+| **Skills**      | `skills/`                    | Skills with `<name>/SKILL.md` structure                     |
+| **Hooks**       | `hooks/hooks.json`           | Hook configuration                                          |
+| **MCP servers** | `.mcp.json`                  | MCP server definitions                                      |
+| **LSP servers** | `.lsp.json`                  | Language server configurations                              |
 
 ***
 
@@ -735,9 +713,8 @@ Follow semantic versioning for plugin releases:
 
 * [Plugins](/en/plugins) - Tutorials and practical usage
 * [Plugin marketplaces](/en/plugin-marketplaces) - Creating and managing marketplaces
-* [Slash commands](/en/slash-commands) - Command development details
+* [Skills](/en/skills) - Skill development details
 * [Subagents](/en/sub-agents) - Agent configuration and capabilities
-* [Agent Skills](/en/skills) - Extend Claude's capabilities
 * [Hooks](/en/hooks) - Event handling and automation
 * [MCP](/en/mcp) - External tool integration
 * [Settings](/en/settings) - Configuration options for plugins

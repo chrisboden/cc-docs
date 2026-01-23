@@ -33,9 +33,7 @@ export OTEL_LOGS_EXPORT_INTERVAL=5000     # 5 seconds (default: 5000ms)
 claude
 ```
 
-<Note>
-  The default export intervals are 60 seconds for metrics and 5 seconds for logs. During setup, you may want to use shorter intervals for debugging purposes. Remember to reset these for production use.
-</Note>
+> **Note:** The default export intervals are 60 seconds for metrics and 5 seconds for logs. During setup, you may want to use shorter intervals for debugging purposes. Remember to reset these for production use.
 
 For full configuration options, see the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options).
 
@@ -58,9 +56,7 @@ Example managed settings configuration:
 }
 ```
 
-<Note>
-  Managed settings can be distributed via MDM (Mobile Device Management) or other device management solutions. Environment variables defined in the managed settings file have high precedence and cannot be overridden by users.
-</Note>
+> **Note:** Managed settings can be distributed via MDM (Mobile Device Management) or other device management solutions. Environment variables defined in the managed settings file have high precedence and cannot be overridden by users.
 
 ## Configuration details
 
@@ -141,8 +137,7 @@ These custom attributes will be included in all metrics and events, allowing you
 * Create team-specific dashboards
 * Set up alerts for specific teams
 
-<Warning>
-  **Important formatting requirements for OTEL\_RESOURCE\_ATTRIBUTES:**
+> **Warning:** **Important formatting requirements for OTEL\_RESOURCE\_ATTRIBUTES:**
 
   The `OTEL_RESOURCE_ATTRIBUTES` environment variable follows the [W3C Baggage specification](https://www.w3.org/TR/baggage/), which has strict formatting requirements:
 
@@ -166,7 +161,6 @@ These custom attributes will be included in all metrics and events, allowing you
   ```
 
   Note: wrapping values in quotes doesn't escape spaces. For example, `org.name="My Company"` results in the literal value `"My Company"` (with quotes included), not `My Company`.
-</Warning>
 
 ### Example configurations
 
@@ -424,9 +418,7 @@ The `claude_code.cost.usage` metric helps with:
 * Tracking usage trends across teams or individuals
 * Identifying high-usage sessions for optimization
 
-<Note>
-  Cost metrics are approximations. For official billing data, refer to your API provider (Claude Console, AWS Bedrock, or Google Cloud Vertex).
-</Note>
+> **Note:** Cost metrics are approximations. For official billing data, refer to your API provider (Claude Console, AWS Bedrock, or Google Cloud Vertex).
 
 ### Alerting and segmentation
 

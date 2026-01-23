@@ -48,6 +48,9 @@ Use `references/docs_manifest.json` for a machine-readable map when the topic is
 - `references/overview.md` - high-level product overview
 - `references/quickstart.md` - quick start workflow
 - `references/setup.md` - environment setup steps
+- `references/features-overview.md` - features and capabilities overview
+- `references/how-claude-code-works.md` - architecture and internal workings
+- `references/best-practices.md` - best practices and recommendations
 - `references/changelog.md` - release notes and version changes
 - `references/docs_manifest.json` - machine-readable manifest of all docs
 

@@ -24,25 +24,32 @@ Download the Claude desktop app for your platform:
 
 For Windows ARM64, [download here](https://claude.ai/api/desktop/win32/arm64/exe/latest/redirect?utm_source=claude_code\&utm_medium=docs).
 
-<Note>
-  Local sessions are not available on Windows ARM64.
-</Note>
+> **Note:** Local sessions are not available on Windows ARM64.
 
 ## Features
 
 Claude Code on desktop provides:
 
+* **Diff view**: Review Claude's changes file by file before creating a pull request, and comment on specific lines to iterate further
 * **Parallel local sessions with `git` worktrees**: Run multiple Claude Code sessions simultaneously in the same repository, each with its own isolated `git` worktree
 * **Include files listed in your `.gitignore` in your worktrees**: Automatically copy files in your `.gitignore`, like `.env`, to new worktrees using `.worktreeinclude`
 * **Launch Claude Code on the web**: Kick off secure cloud sessions directly from the desktop app
+
+## Review changes with diff view
+
+After Claude makes changes to your code, the diff view lets you review modifications file by file before creating a pull request.
+
+When Claude makes changes to files, a diff stats indicator appears showing the number of lines added and removed (for example, `+12 -1`). Click this indicator to open the diff viewer, which displays a file list on the left and the changes for each file on the right.
+
+### Comment on specific lines
+
+Click on any line in the diff to open a comment box. Type your feedback and press **Enter** to send. In the full diff view, press **Enter** to accept each comment, then **Cmd+Enter** to send them all. Claude reads your comments and makes the requested changes, which appear as a new diff you can review.
 
 ## Using Git worktrees
 
 Claude Code on desktop enables running multiple Claude Code sessions in the same repository using Git worktrees. Each session gets its own isolated worktree, allowing Claude to work on different tasks without conflicts. The default location for worktrees is `~/.claude-worktrees` but this can be configured in your settings on the Claude desktop app.
 
-<Note>
-  If you start a local session in a folder that does not have Git initialized, the desktop app will not create a new worktree.
-</Note>
+> **Note:** If you start a local session in a folder that does not have Git initialized, the desktop app will not create a new worktree.
 
 ### Copying files ignored with `.gitignore`
 
@@ -59,9 +66,7 @@ Create a `.worktreeinclude` file in your repository root:
 
 The file uses `.gitignore`-style patterns. When a worktree is created, files matching these patterns that are also in your `.gitignore` will be copied from your main repository to the worktree.
 
-<Tip>
-  Only files that are both matched by `.worktreeinclude` AND listed in `.gitignore` are copied. This prevents accidentally duplicating tracked files.
-</Tip>
+> **Tip:** Only files that are both matched by `.worktreeinclude` AND listed in `.gitignore` are copied. This prevents accidentally duplicating tracked files.
 
 ### Launch Claude Code on the web
 
@@ -75,9 +80,7 @@ For more details, see [Claude Code on the web](/en/claude-code-on-the-web).
 
 Claude Code on desktop includes a bundled, stable version of Claude Code to ensure a consistent experience for all desktop users. The bundled version is required and downloaded on first launch even if a version of Claude Code exists on the computer. Desktop automatically manages version updates and cleans up old versions.
 
-<Note>
-  The bundled Claude Code version in Desktop may differ from the latest CLI version. Desktop prioritizes stability while the CLI may have newer features.
-</Note>
+> **Note:** The bundled Claude Code version in Desktop may differ from the latest CLI version. Desktop prioritizes stability while the CLI may have newer features.
 
 ## Environment configuration
 
@@ -87,8 +90,7 @@ For local environments, Claude Code on desktop automatically extracts your `$PAT
 
 Select "Local" environment, then to the right, select the settings button. This will open a dialog where you can update local environment variables. This is useful for setting project-specific variables or API keys that your development workflows require. Environment variable values are masked in the UI for security reasons.
 
-<Note>
-  Environment variables must be specified as key-value pairs, in [`.env` format](https://www.dotenv.org/). For example:
+> **Note:** Environment variables must be specified as key-value pairs, in [`.env` format](https://www.dotenv.org/). For example:
 
   ```
   API_KEY=your_api_key
@@ -99,7 +101,6 @@ Select "Local" environment, then to the right, select the settings button. This 
   MIIE...
   -----END CERT-----"
   ```
-</Note>
 
 ## Enterprise configuration
 

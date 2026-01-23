@@ -4,7 +4,7 @@
 
 ## System requirements
 
-* **Operating Systems**: macOS 10.15+, Ubuntu 20.04+/Debian 10+, or Windows 10+ (with WSL 1, WSL 2, or Git for Windows)
+* **Operating Systems**: macOS 13.0+, Ubuntu 20.04+/Debian 10+, or Windows 10+ (with WSL 1, WSL 2, or Git for Windows)
 * **Hardware**: 4 GB+ RAM
 * **Network**: Internet connection required (see [network configuration](/en/network-config#network-access-requirements))
 * **Shell**: Works best in Bash or Zsh
@@ -38,18 +38,24 @@ To install Claude Code, use one of the following methods:
     ```batch  theme={null}
     curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
     ```
+
+    > **Info:** Native installations automatically update in the background to keep you on the latest version.
   </Tab>
 
   <Tab title="Homebrew">
     ```sh  theme={null}
     brew install --cask claude-code
     ```
+
+    > **Info:** Homebrew installations do not auto-update. Run `brew upgrade claude-code` periodically to get the latest features and security fixes.
   </Tab>
 
   <Tab title="WinGet">
     ```powershell  theme={null}
     winget install Anthropic.ClaudeCode
     ```
+
+    > **Info:** WinGet installations do not auto-update. Run `winget upgrade Anthropic.ClaudeCode` periodically to get the latest features and security fixes.
   </Tab>
 </Tabs>
 
@@ -62,13 +68,9 @@ claude
 
 If you encounter any issues during installation, consult the [troubleshooting guide](/en/troubleshooting).
 
-<Tip>
-  Run `claude doctor` after installation to check your installation type and version.
-</Tip>
+> **Tip:** Run `claude doctor` after installation to check your installation type and version.
 
-<Note>
-  **Alpine Linux and other musl/uClibc-based distributions**: The native installer requires `libgcc`, `libstdc++`, and `ripgrep`. For Alpine: `apk add libgcc libstdc++ ripgrep`. Set `USE_BUILTIN_RIPGREP=0`.
-</Note>
+> **Note:** **Alpine Linux and other musl/uClibc-based distributions**: The native installer requires `libgcc`, `libstdc++`, and `ripgrep`. For Alpine: `apk add libgcc libstdc++ ripgrep`. Set `USE_BUILTIN_RIPGREP=0`.
 
 ### Authentication
 
@@ -85,46 +87,73 @@ If you encounter any issues during installation, consult the [troubleshooting gu
 
 ### Install a specific version
 
-To install a specific version of Claude Code with the native installer:
+The native installer accepts either a specific version number or a release channel (`latest` or `stable`). The channel you choose at install time becomes your default for auto-updates. See [Configure release channel](#configure-release-channel) for more information.
 
-**macOS, Linux, WSL:**
+To install the latest version (default):
 
-```bash  theme={null}
-# Install stable version (default)
-curl -fsSL https://claude.ai/install.sh | bash
+<Tabs>
+  <Tab title="macOS, Linux, WSL">
+    ```bash  theme={null}
+    curl -fsSL https://claude.ai/install.sh | bash
+    ```
+  </Tab>
 
-# Install latest version
-curl -fsSL https://claude.ai/install.sh | bash -s latest
+  <Tab title="Windows PowerShell">
+    ```powershell  theme={null}
+    irm https://claude.ai/install.ps1 | iex
+    ```
+  </Tab>
 
-# Install specific version number
-curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
-```
+  <Tab title="Windows CMD">
+    ```batch  theme={null}
+    curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+    ```
+  </Tab>
+</Tabs>
 
-**Windows PowerShell:**
+To install the stable version:
 
-```powershell  theme={null}
-# Install stable version (default)
-irm https://claude.ai/install.ps1 | iex
+<Tabs>
+  <Tab title="macOS, Linux, WSL">
+    ```bash  theme={null}
+    curl -fsSL https://claude.ai/install.sh | bash -s stable
+    ```
+  </Tab>
 
-# Install latest version
-& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) latest
+  <Tab title="Windows PowerShell">
+    ```powershell  theme={null}
+    & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) stable
+    ```
+  </Tab>
 
-# Install specific version number
-& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
-```
+  <Tab title="Windows CMD">
+    ```batch  theme={null}
+    curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd stable && del install.cmd
+    ```
+  </Tab>
+</Tabs>
 
-**Windows CMD:**
+To install a specific version number:
 
-```batch  theme={null}
-REM Install stable version (default)
-curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd && del install.cmd
+<Tabs>
+  <Tab title="macOS, Linux, WSL">
+    ```bash  theme={null}
+    curl -fsSL https://claude.ai/install.sh | bash -s 1.0.58
+    ```
+  </Tab>
 
-REM Install latest version
-curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd latest && del install.cmd
+  <Tab title="Windows PowerShell">
+    ```powershell  theme={null}
+    & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) 1.0.58
+    ```
+  </Tab>
 
-REM Install specific version number
-curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd 1.0.58 && del install.cmd
-```
+  <Tab title="Windows CMD">
+    ```batch  theme={null}
+    curl -fsSL https://claude.ai/install.cmd -o install.cmd && install.cmd 1.0.58 && del install.cmd
+    ```
+  </Tab>
+</Tabs>
 
 ### Binary integrity and code signing
 
@@ -143,16 +172,15 @@ NPM installation is deprecated. Use the [native installation](#installation) met
 npm install -g @anthropic-ai/claude-code
 ```
 
-<Warning>
-  Do NOT use `sudo npm install -g` as this can lead to permission issues and security risks.
-  If you encounter permission errors, see [configure Claude Code](/en/troubleshooting#linux-permission-issues) for recommended solutions.
-</Warning>
+> **Warning:** Do NOT use `sudo npm install -g` as this can lead to permission issues and security risks.
+  If you encounter permission errors, see [troubleshooting permission errors](/en/troubleshooting#command-not-found-claude-or-permission-errors) for recommended solutions.
 
 ## Windows setup
 
 **Option 1: Claude Code within WSL**
 
 * Both WSL 1 and WSL 2 are supported
+* WSL 2 supports [sandboxing](/en/sandboxing) for enhanced security. WSL 1 does not support sandboxing.
 
 **Option 2: Claude Code on native Windows with Git Bash**
 
@@ -173,13 +201,28 @@ Claude Code automatically keeps itself up to date to ensure you have the latest 
 * **Notifications**: You'll see a notification when updates are installed
 * **Applying updates**: Updates take effect the next time you start Claude Code
 
-<Note>
-  Homebrew and WinGet installations do not auto-update. Use `brew upgrade claude-code` or `winget upgrade Anthropic.ClaudeCode` to update manually.
+> **Note:** Homebrew and WinGet installations do not auto-update. Use `brew upgrade claude-code` or `winget upgrade Anthropic.ClaudeCode` to update manually.
 
   **Known issue:** Claude Code may notify you of updates before the new version is available in these package managers. If an upgrade fails, wait and try again later.
-</Note>
 
-**Disable auto-updates:**
+### Configure release channel
+
+Configure which release channel Claude Code follows for both auto-updates and `claude update` with the `autoUpdatesChannel` setting:
+
+* `"latest"` (default): Receive new features as soon as they're released
+* `"stable"`: Use a version that is typically about one week old, skipping releases with major regressions
+
+Configure this via `/config` → **Auto-update channel**, or add it to your [settings.json file](/en/settings):
+
+```json  theme={null}
+{
+  "autoUpdatesChannel": "stable"
+}
+```
+
+For enterprise deployments, you can enforce a consistent release channel across your organization using [managed settings](/en/iam#managed-settings).
+
+### Disable auto-updates
 
 Set the `DISABLE_AUTOUPDATER` environment variable in your shell or [settings.json file](/en/settings):
 
@@ -242,9 +285,7 @@ npm uninstall -g @anthropic-ai/claude-code
 
 ### Clean up configuration files (optional)
 
-<Warning>
-  Removing configuration files will delete all your settings, allowed tools, MCP server configurations, and session history.
-</Warning>
+> **Warning:** Removing configuration files will delete all your settings, allowed tools, MCP server configurations, and session history.
 
 To remove Claude Code settings and cached data:
 

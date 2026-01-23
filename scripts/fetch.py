@@ -223,6 +223,121 @@ def get_fallback_pages() -> List[str]:
     ]
 
 
+def clean_mdx_content(content: str) -> str:
+    """Remove JSX/React components from MDX content and convert to plain markdown."""
+
+    # Remove export const component definitions (multi-line)
+    # These look like: export const ComponentName = ({...}) => { ... };
+    def remove_export_components(text: str) -> str:
+        result = []
+        lines = text.split('\n')
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+            # Check if this line starts an export const with arrow function
+            if re.match(r'^export\s+const\s+\w+\s*=', line):
+                # Count braces to find the matching end, but be smarter about it
+                # by looking for "};" at the START of a line (no indentation)
+                # which indicates the end of a top-level component
+                i += 1
+                while i < len(lines):
+                    # End of component: }; at start of line (possibly with whitespace)
+                    if re.match(r'^\};\s*$', lines[i]):
+                        i += 1
+                        break
+                    i += 1
+            else:
+                result.append(line)
+                i += 1
+        return '\n'.join(result)
+
+    content = remove_export_components(content)
+
+    # Convert <Warning>...</Warning> to blockquote (handles multi-line)
+    content = re.sub(
+        r'<Warning>\s*(.*?)\s*</Warning>',
+        r'> **Warning:** \1',
+        content,
+        flags=re.DOTALL
+    )
+
+    # Convert <Note>...</Note> to blockquote
+    content = re.sub(
+        r'<Note>\s*(.*?)\s*</Note>',
+        r'> **Note:** \1',
+        content,
+        flags=re.DOTALL
+    )
+
+    # Convert <Tip>...</Tip> to blockquote
+    content = re.sub(
+        r'<Tip>\s*(.*?)\s*</Tip>',
+        r'> **Tip:** \1',
+        content,
+        flags=re.DOTALL
+    )
+
+    # Convert <Info>...</Info> to blockquote
+    content = re.sub(
+        r'<Info>\s*(.*?)\s*</Info>',
+        r'> **Info:** \1',
+        content,
+        flags=re.DOTALL
+    )
+
+    # Convert <Accordion title="...">...</Accordion> to markdown details
+    def convert_accordion(match):
+        title = match.group(1)
+        body = match.group(2).strip()
+        return f"**{title}**\n\n{body}"
+
+    content = re.sub(
+        r'<Accordion\s+title="([^"]+)">\s*(.*?)\s*</Accordion>',
+        convert_accordion,
+        content,
+        flags=re.DOTALL
+    )
+
+    # Convert <Steps>...<Step title="...">...</Step>...</Steps> to numbered lists
+    def convert_steps(match):
+        steps_content = match.group(1)
+        # Find all Step elements
+        step_pattern = r'<Step\s+title="([^"]+)">\s*(.*?)\s*</Step>'
+        steps = re.findall(step_pattern, steps_content, flags=re.DOTALL)
+        if not steps:
+            return ''
+        result_lines = []
+        for idx, (title, body) in enumerate(steps, 1):
+            result_lines.append(f"{idx}. **{title}**")
+            # Indent the body
+            body_lines = body.strip().split('\n')
+            for line in body_lines:
+                result_lines.append(f"   {line}")
+            result_lines.append('')
+        return '\n'.join(result_lines)
+
+    content = re.sub(
+        r'<Steps>\s*(.*?)\s*</Steps>',
+        convert_steps,
+        content,
+        flags=re.DOTALL
+    )
+
+    # Remove self-closing JSX component tags like <ComponentName ... />
+    content = re.sub(r'<[A-Z][a-zA-Z]*(?:\s+[^>]*)?\s*/>', '', content)
+
+    # Remove import statements
+    content = re.sub(r'^import\s+.*?[\'"];?\s*$', '', content, flags=re.MULTILINE)
+
+    # Clean up excessive blank lines (more than 2 consecutive)
+    content = re.sub(r'\n{4,}', '\n\n\n', content)
+
+    # Remove leading/trailing whitespace from the whole content
+    content = content.strip()
+
+    return content
+
+
 def validate_markdown_content(content: str, filename: str) -> None:
     """Validate that content is proper markdown."""
     if not content or content.startswith('<!DOCTYPE') or '<html' in content[:100]:
@@ -264,6 +379,13 @@ def fetch_markdown_content(path: str, session: requests.Session, base_url: str) 
 
             response.raise_for_status()
             content = response.text
+
+            # Clean MDX/JSX content before validation
+            original_len = len(content)
+            content = clean_mdx_content(content)
+            if len(content) < original_len:
+                logger.info(f"Cleaned MDX content: {original_len} -> {len(content)} bytes")
+
             validate_markdown_content(content, filename)
 
             logger.info(f"Successfully fetched {filename} ({len(content)} bytes)")

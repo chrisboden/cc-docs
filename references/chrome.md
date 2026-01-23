@@ -2,9 +2,7 @@
 
 > Connect Claude Code to your browser to test web apps, debug with console logs, and automate browser tasks.
 
-<Note>
-  Chrome integration is in beta and currently works with Google Chrome only. It is not yet supported on Brave, Arc, or other Chromium-based browsers. WSL (Windows Subsystem for Linux) is also not supported.
-</Note>
+> **Note:** Chrome integration is in beta and currently works with Google Chrome only. It is not yet supported on Brave, Arc, or other Chromium-based browsers. WSL (Windows Subsystem for Linux) is also not supported.
 
 Claude Code integrates with the Claude in Chrome browser extension to give you browser automation capabilities directly from your terminal. Build in your terminal, then test and debug in your browser without switching contexts.
 
@@ -28,7 +26,7 @@ Before using Claude Code with Chrome, you need:
 
 * [Google Chrome](https://www.google.com/chrome/) browser
 * [Claude in Chrome extension](https://chromewebstore.google.com/detail/claude/fcoeoabgfenejglbffodgkkbkcdhcgfn) version 1.0.36 or higher
-* [Claude Code CLI](/en/quickstart#step-1:-install-claude-code) version 2.0.73 or higher
+* [Claude Code CLI](/en/quickstart#step-1-install-claude-code) version 2.0.73 or higher
 * A paid Claude plan (Pro, Team, or Enterprise)
 
 ## How the integration works
@@ -39,15 +37,13 @@ When Claude encounters a login page, CAPTCHA, or other blocker, it pauses and as
 
 Claude opens new tabs for browser tasks rather than taking over existing ones. However, it shares your browser's login state, so if you're already signed into a site in Chrome, Claude can access it without re-authenticating.
 
-<Note>
-  The Chrome integration requires a visible browser window. When Claude performs browser actions, you'll see Chrome open and navigate in real time. There's no headless mode since the integration relies on your actual browser session with its login state.
-</Note>
+> **Note:** The Chrome integration requires a visible browser window. When Claude performs browser actions, you'll see Chrome open and navigate in real time. There's no headless mode since the integration relies on your actual browser session with its login state.
 
 ## Set up the integration
 
 <Steps>
   <Step title="Update Claude Code">
-    Chrome integration requires a recent version of Claude Code. If you installed using the [native installer](/en/quickstart#step-1:-install-claude-code), updates happen automatically. Otherwise, run:
+    Chrome integration requires a recent version of Claude Code. If you installed using the [native installer](/en/quickstart#step-1-install-claude-code), updates happen automatically. Otherwise, run:
 
     ```bash  theme={null}
     claude update
@@ -67,7 +63,7 @@ Claude opens new tabs for browser tasks rather than taking over existing ones. H
   </Step>
 </Steps>
 
-You can also enable Chrome integration from within an existing session using the `/chrome` slash command.
+You can also enable Chrome integration from within an existing session using the `/chrome` command.
 
 ## Try it out
 
@@ -202,9 +198,7 @@ The first time you use the integration, Claude Code installs a native messaging 
 
 Chrome integration requires the `--chrome` flag each time you start Claude Code. To enable it by default, run `/chrome` and select "Enabled by default".
 
-<Note>
-  Enabling Chrome by default increases context usage since browser tools are always loaded. If you notice increased context consumption, disable this setting and use `--chrome` only when needed.
-</Note>
+> **Note:** Enabling Chrome by default increases context usage since browser tools are always loaded. If you notice increased context consumption, disable this setting and use `--chrome` only when needed.
 
 Site-level permissions are inherited from the Chrome extension. Manage permissions in the Chrome extension settings to control which sites Claude can browse, click, and type on. Run `/chrome` to see current permission settings.
 

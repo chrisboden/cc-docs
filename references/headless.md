@@ -4,9 +4,7 @@
 
 The [Agent SDK](https://platform.claude.com/docs/en/agent-sdk/overview) gives you the same tools, agent loop, and context management that power Claude Code. It's available as a CLI for scripts and CI/CD, or as [Python](https://platform.claude.com/docs/en/agent-sdk/python) and [TypeScript](https://platform.claude.com/docs/en/agent-sdk/typescript) packages for full programmatic control.
 
-<Note>
-  The CLI was previously called "headless mode." The `-p` flag and all CLI options work the same way.
-</Note>
+> **Note:** The CLI was previously called "headless mode." The `-p` flag and all CLI options work the same way.
 
 To run Claude Code programmatically from the CLI, pass `-p` with your prompt and any [CLI options](/en/cli-reference):
 
@@ -58,8 +56,7 @@ claude -p "Extract the main function names from auth.py" \
   --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}'
 ```
 
-<Tip>
-  Use a tool like [jq](https://jqlang.github.io/jq/) to parse the response and extract specific fields:
+> **Tip:** Use a tool like [jq](https://jqlang.github.io/jq/) to parse the response and extract specific fields:
 
   ```bash  theme={null}
   # Extract the text result
@@ -71,7 +68,6 @@ claude -p "Extract the main function names from auth.py" \
     --json-schema '{"type":"object","properties":{"functions":{"type":"array","items":{"type":"string"}}},"required":["functions"]}' \
     | jq '.structured_output'
   ```
-</Tip>
 
 ### Auto-approve tools
 
@@ -91,9 +87,9 @@ claude -p "Look at my staged changes and create an appropriate commit" \
   --allowedTools "Bash(git diff:*),Bash(git log:*),Bash(git status:*),Bash(git commit:*)"
 ```
 
-<Note>
-  [Slash commands](/en/slash-commands) like `/commit` are only available in interactive mode. In `-p` mode, describe the task you want to accomplish instead.
-</Note>
+The `--allowedTools` flag uses [permission rule syntax](/en/settings#permission-rule-syntax). The `:*` suffix enables prefix matching, so `Bash(git diff:*)` allows any command starting with `git diff`.
+
+> **Note:** User-invoked [skills](/en/skills) like `/commit` and [built-in commands](/en/interactive-mode#built-in-commands) are only available in interactive mode. In `-p` mode, describe the task you want to accomplish instead.
 
 ### Customize the system prompt
 

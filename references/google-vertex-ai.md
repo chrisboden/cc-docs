@@ -16,13 +16,9 @@ Before configuring Claude Code with Vertex AI, ensure you have:
 
 Claude Code can be used with both Vertex AI [global](https://cloud.google.com/blog/products/ai-machine-learning/global-endpoint-for-claude-models-generally-available-on-vertex-ai) and regional endpoints.
 
-<Note>
-  Vertex AI may not support the Claude Code default models on all regions. You may need to switch to a [supported region or model](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations#genai-partner-models).
-</Note>
+> **Note:** Vertex AI may not support the Claude Code default models on all regions. You may need to switch to a [supported region or model](https://cloud.google.com/vertex-ai/generative-ai/docs/learn/locations#genai-partner-models).
 
-<Note>
-  Vertex AI may not support the Claude Code default models on global endpoints. You may need to switch to a regional endpoint or [supported model](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-partner-models#supported_models).
-</Note>
+> **Note:** Vertex AI may not support the Claude Code default models on global endpoints. You may need to switch to a regional endpoint or [supported model](https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-partner-models#supported_models).
 
 ## Setup
 
@@ -53,9 +49,7 @@ Claude Code uses standard Google Cloud authentication.
 
 For more information, see [Google Cloud authentication documentation](https://cloud.google.com/docs/authentication).
 
-<Note>
-  When authenticating, Claude Code will automatically use the project ID from the `ANTHROPIC_VERTEX_PROJECT_ID` environment variable. To override this, set one of these environment variables: `GCLOUD_PROJECT`, `GOOGLE_CLOUD_PROJECT`, or `GOOGLE_APPLICATION_CREDENTIALS`.
-</Note>
+> **Note:** When authenticating, Claude Code will automatically use the project ID from the `ANTHROPIC_VERTEX_PROJECT_ID` environment variable. To override this, set one of these environment variables: `GCLOUD_PROJECT`, `GOOGLE_CLOUD_PROJECT`, or `GOOGLE_APPLICATION_CREDENTIALS`.
 
 ### 4. Configure Claude Code
 
@@ -81,13 +75,9 @@ export VERTEX_REGION_CLAUDE_4_0_SONNET=us-east5
 export VERTEX_REGION_CLAUDE_4_1_OPUS=europe-west1
 ```
 
-<Note>
-  [Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching) is automatically supported when you specify the `cache_control` ephemeral flag. To disable it, set `DISABLE_PROMPT_CACHING=1`. For heightened rate limits, contact Google Cloud support.
-</Note>
+> **Note:** [Prompt caching](https://docs.claude.com/en/docs/build-with-claude/prompt-caching) is automatically supported when you specify the `cache_control` ephemeral flag. To disable it, set `DISABLE_PROMPT_CACHING=1`. For heightened rate limits, contact Google Cloud support.
 
-<Note>
-  When using Vertex AI, the `/login` and `/logout` commands are disabled since authentication is handled through Google Cloud credentials.
-</Note>
+> **Note:** When using Vertex AI, the `/login` and `/logout` commands are disabled since authentication is handled through Google Cloud credentials.
 
 ### 5. Model configuration
 
@@ -98,9 +88,7 @@ Claude Code uses these default models for Vertex AI:
 | Primary model    | `claude-sonnet-4-5@20250929` |
 | Small/fast model | `claude-haiku-4-5@20251001`  |
 
-<Note>
-  For Vertex AI users, Claude Code will not automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (for example, `claude-haiku-4-5@20251001`).
-</Note>
+> **Note:** For Vertex AI users, Claude Code will not automatically upgrade from Haiku 3.5 to Haiku 4.5. To manually switch to a newer Haiku model, set the `ANTHROPIC_DEFAULT_HAIKU_MODEL` environment variable to the full model name (for example, `claude-haiku-4-5@20251001`).
 
 To customize models:
 
@@ -121,17 +109,13 @@ For more restrictive permissions, create a custom role with only the permissions
 
 For details, see [Vertex IAM documentation](https://cloud.google.com/vertex-ai/docs/general/access-control).
 
-<Note>
-  We recommend creating a dedicated GCP project for Claude Code to simplify cost tracking and access control.
-</Note>
+> **Note:** We recommend creating a dedicated GCP project for Claude Code to simplify cost tracking and access control.
 
 ## 1M token context window
 
 Claude Sonnet 4 and Sonnet 4.5 support the [1M token context window](https://docs.claude.com/en/docs/build-with-claude/context-windows#1m-token-context-window) on Vertex AI.
 
-<Note>
-  The 1M token context window is currently in beta. To use the extended context window, include the `context-1m-2025-08-07` beta header in your Vertex AI requests.
-</Note>
+> **Note:** The 1M token context window is currently in beta. To use the extended context window, include the `context-1m-2025-08-07` beta header in your Vertex AI requests.
 
 ## Troubleshooting
 

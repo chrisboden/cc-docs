@@ -4,9 +4,7 @@
 
 Claude Code provides an analytics dashboard that helps organizations understand developer usage patterns, track productivity metrics, and optimize their Claude Code adoption.
 
-<Note>
-  Analytics are currently available only for organizations using Claude Code with the Claude API through the Claude Console.
-</Note>
+> **Note:** Analytics are currently available only for organizations using Claude Code with the Claude API through the Claude Console.
 
 ## Access analytics
 
@@ -20,9 +18,7 @@ Navigate to the analytics dashboard at [console.anthropic.com/claude-code](https
 * **Admin**
 * **Developer**
 
-<Note>
-  Users with **User**, **Claude Code User** or **Membership Admin** roles cannot access analytics.
-</Note>
+> **Note:** Users with **User**, **Claude Code User** or **Membership Admin** roles cannot access analytics.
 
 ## Available metrics
 

@@ -7,9 +7,7 @@ in Claude Code's lifecycle. Hooks provide deterministic control over Claude
 Code's behavior, ensuring certain actions always happen rather than relying on
 the LLM to choose to run them.
 
-<Tip>
-  For reference documentation on hooks, see [Hooks reference](/en/hooks).
-</Tip>
+> **Tip:** For reference documentation on hooks, see [Hooks reference](/en/hooks).
 
 Example use cases for hooks include:
 
@@ -27,12 +25,10 @@ Example use cases for hooks include:
 By encoding these rules as hooks rather than prompting instructions, you turn
 suggestions into app-level code that executes every time it is expected to run.
 
-<Warning>
-  You must consider the security implication of hooks as you add them, because hooks run automatically during the agent loop with your current environment's credentials.
+> **Warning:** You must consider the security implication of hooks as you add them, because hooks run automatically during the agent loop with your current environment's credentials.
   For example, malicious hooks code can exfiltrate your data. Always review your hooks implementation before registering them.
 
   For full security best practices, see [Security Considerations](/en/hooks#security-considerations) in the hooks reference documentation.
-</Warning>
 
 ## Hook Events Overview
 
@@ -47,6 +43,7 @@ workflow:
 * **Stop**: Runs when Claude Code finishes responding
 * **SubagentStop**: Runs when subagent tasks complete
 * **PreCompact**: Runs before Claude Code is about to run a compact operation
+* **Setup**: Runs when Claude Code is invoked with `--init`, `--init-only`, or `--maintenance` flags
 * **SessionStart**: Runs when Claude Code starts a new session or resumes an existing session
 * **SessionEnd**: Runs when Claude Code session ends
 
@@ -64,7 +61,7 @@ Install `jq` for JSON processing in the command line.
 
 ### Step 1: Open hooks configuration
 
-Run the `/hooks` [slash command](/en/slash-commands) and select
+Run the `/hooks` command and select
 the `PreToolUse` hook event.
 
 `PreToolUse` hooks run before tool calls and can block them while providing
@@ -76,7 +73,7 @@ Select `+ Add new matcher…` to run your hook only on Bash tool calls.
 
 Type `Bash` for the matcher.
 
-<Note>You can use `*` to match all tools.</Note>
+> **Note:** You can use `*` to match all tools.
 
 ### Step 3: Add the hook
 
@@ -132,9 +129,7 @@ ls - Lists files and directories
 
 ## More Examples
 
-<Note>
-  For a complete example implementation, see the [bash command validator example](https://github.com/anthropics/claude-code/blob/main/examples/hooks/bash_command_validator_example.py) in our public codebase.
-</Note>
+> **Note:** For a complete example implementation, see the [bash command validator example](https://github.com/anthropics/claude-code/blob/main/examples/hooks/bash_command_validator_example.py) in our public codebase.
 
 ### Code Formatting Hook
 

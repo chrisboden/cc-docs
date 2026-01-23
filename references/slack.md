@@ -56,9 +56,7 @@ Before using Claude Code in Slack, ensure you have the following:
     | **Code only**   | Claude routes all @mentions to Claude Code sessions. Best for teams using Claude in Slack exclusively for development tasks.                                                                                                             |
     | **Code + Chat** | Claude analyzes each message and intelligently routes between Claude Code (for coding tasks) and Claude Chat (for writing, analysis, and general questions). Best for teams who want a single @Claude entry point for all types of work. |
 
-    <Note>
-      In Code + Chat mode, if Claude routes a message to Chat but you wanted a coding session, you can click "Retry as Code" to create a Claude Code session instead. Similarly, if it's routed to Code but you wanted a Chat session, you can choose that option in that thread.
-    </Note>
+    > **Note:** In Code + Chat mode, if Claude routes a message to Chat but you wanted a coding session, you can click "Retry as Code" to create a Claude Code session instead. Similarly, if it's routed to Code but you wanted a Chat session, you can choose that option in that thread.
   </Step>
 </Steps>
 
@@ -70,9 +68,7 @@ When you mention @Claude in a Slack channel or thread, Claude automatically anal
 
 You can also explicitly tell Claude to handle a request as a coding task, even if it doesn't automatically detect it.
 
-<Note>
-  Claude Code in Slack only works in channels (public or private). It does not work in direct messages (DMs).
-</Note>
+> **Note:** Claude Code in Slack only works in channels (public or private). It does not work in direct messages (DMs).
 
 ### Context gathering
 
@@ -82,9 +78,7 @@ You can also explicitly tell Claude to handle a request as a coding task, even i
 
 This context helps Claude understand the problem, select the appropriate repository, and inform its approach to the task.
 
-<Warning>
-  When @Claude is invoked in Slack, Claude is given access to the conversation context to better understand your request. Claude may follow directions from other messages in the context, so users should make sure to only use Claude in trusted Slack conversations.
-</Warning>
+> **Warning:** When @Claude is invoked in Slack, Claude is given access to the conversation context to better understand your request. Claude may follow directions from other messages in the context, so users should make sure to only use Claude in trusted Slack conversations.
 
 ### Session flow
 
